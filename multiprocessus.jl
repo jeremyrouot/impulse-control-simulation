@@ -125,13 +125,11 @@ display(plot(xxs_plot, xys_plot, zxs_plot, zys_plot, u1_plot, u2_plot,
              layout=(3, 2), left_margin=10mm))
 savefig("direct_method.pdf")
 
-println(taud, " ", ccd)
 xy_plot = plot(xxs, xys, legend=false, color=:blue, linestyle=:dot)
 xy_plot = plot!(zxs, zys, legend=false, color=:green, linestyle=:dot)
 xy_plot = implicit_plot!(eqN2; xlims=(0, 2), ylims=(0.45, 3), color=:red)
 xy_plot = implicit_plot!(eqZ2; xlims=(0, 2), ylims=(0.45, 3), color=:red)
-annotate!(-1.2, 1.5, text("Direct method:\n" * L"\bar\tau=%$(round(taud, digits=2))" *
-                          "\n" * L"\bar\rho=%$(round(ccd[end], digits=2))", 8, :blue))
+annotate!(-1.2, 1.5, text("Direct method:\n" * L"\bar\tau=%$(round(taud, digits=2))" * "\n" * L"\bar\rho=%$(round(ccd[end], digits=2))", 8, :blue))
 
 function F0(x)
     return [
@@ -314,14 +312,11 @@ annotate!(1.25, 1.5, text(L"C_y", 9, :blue))
 annotate!(0.78, 0.6, text(L"C_z", 9, :blue))
 
 normz = sqrt.(x3 .^ 2 .+ x4 .^ 2)
-println(xx3[end][3:4])
 ztau = sqrt(sum(xx3[end][3:4] .^ 2))
-println(ztau)
 
 Hs_plot = plot(
     tt,
-    sum((2 * lbd * cc * [x3 x4] * ztau - [p1 .* normz p2 .* normz]) .* [x3 x4],
-        dims=2),
+    sum((2 * lbd * cc * [x3 x4] * ztau - [p1 .* normz p2 .* normz]) .* [x3 x4], dims=2),
     xlabel=L"t",
     legend=false,
     ylabel=L"(2\bar\rho\lambda|\!\bar z(\bar\tau)|\!\bar z(t)-p_y(t)|\bar z(t)|)\cdot \bar z(t)",
@@ -339,9 +334,4 @@ plot2 = plot(x1_plot, x2_plot, x3_plot, x4_plot, u1_plot, u2_plot, layout=(3, 2)
              size=(800, 600), left_margin=10mm)
 display(plot2)
 savefig("xs-multiprocessus.pdf")
-
-println(taud)
-println(tau0)
-println(ccd^2)
-println(cc^2)
 
